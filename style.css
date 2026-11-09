@@ -1,0 +1,213 @@
+/* 全体背景とフォントの設定 */
+body {
+    background-color: #8CABD8; /* 深みのあるダークブルー */
+    color: #f8fafc;
+    font-size: 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h2{
+    font-size: 30px;
+}
+
+header h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+/* ゲーム全体の枠組み */
+.gamefield {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* エリアごとのカード風スタイリング */
+
+/* 判定・実況エリアの強調 */
+.judgefield {
+    background-color: #3C342D;
+    color: white;
+    border:  3px solid #facc15;   ;
+    padding: 20px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+#judgment {
+    color: #facc15; 
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* ボタンリスト（ul）の横並び配置 */
+.call, .up {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+/* コールボタン・指ボタンのデザイン */
+.call li, .up li {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s, background-color 0.2s;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* コールボタン（緑系） */
+.call li {
+    background-color: #16a34a;
+    color: #fff;
+}
+.call li:hover {
+    background-color: #22c55e;
+}
+
+/* 指ボタン（青系） */
+.up li {
+    background-color: #2563eb;
+    color: #fff;
+}
+.up li:hover {
+    background-color: #3b82f6;
+}
+
+/* ボタンを押したときのカチッと感 */
+.call li:active, .up li:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+/* 残機表示 */
+#pc_zanki, #my_zanki {
+    font-size: 1.8rem;
+    letter-spacing: 5px;
+}
+
+/* リセットボタン */
+#reset {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #b91c1c;
+    margin-bottom: 15px;
+}
+#reset:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+.pc_status_area{
+    text-align: left;
+}
+
+.my_status_area{
+    text-align: right;
+}
+
+#kakegoe{
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    
+}
+
+img{
+    width: 300px;
+}
+
+#kakegoeran{
+    height: 40px;
+    border-radius: 5px;
+}
+
+input[type="text"] {
+  font-size: 24px; /* 掛け声入力欄のフォントサイズ */
+}
+
+.kakegoe{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hand_box{ /* 親要素を基準の位置にする */
+    position: relative; /* これが基準になります */
+    display: inline-block; /* 必要に応じてサイズを合わせる */
+}
+
+.hand_box > span {
+    display: block;
+    text-align: center;
+}
+
+.hand_box img.half_hand{ /*（imgの後ろとトグルクラスで付与されたクラス名はスペースを空けずにくっつけて書く！*/
+    clip-path: inset(0 50% 0 0); /* 上 右 下 左 の時計回り順（右から50%カット） */
+}
+
+.hand_box img.half_hand_fade{
+    animation: fadeOut 3s;
+    animation-fill-mode: both; /*フェードアウトした状態を維持*/
+
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* 手の画像とWIN画像：親要素の左上に重ねる */
+#pc_hand_img, #my_hand_img,
+#pc_win_img, #my_win_img {
+    display: block;
+}
+
+/* WIN画像だけを手の上にピッタリ重ねる設定 */
+#pc_win_img, #my_win_img {
+    position: absolute; /* 親要素（.hand_box）を基準に浮かす */
+    top: 0;
+    left: 0;
+    height: 300px;      /* 手の画像と同じ高さにする */
+    object-fit: contain; /* 画像の比率を崩さずに収める */
+    z-index: 10;       /* 手の画像より手前に表示する */
+
+    animation: fadeIn 3s;
+    animation-fill-mode: both; /*フェードアウトした状態を維持*/
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
