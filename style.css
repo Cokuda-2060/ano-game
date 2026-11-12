@@ -14,23 +14,36 @@ h2{
 }
 
 header h1 {
-    font-size: 50px;
+    font-size: 40px;
     margin-bottom: 20px;
+}
+
+#start{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 /* ゲーム全体の枠組み */
 .gamefield {
     max-width: 500px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
     gap: 20px;
 }
+
+    
 
 /* エリアごとのカード風スタイリング */
 
 /* 判定・実況エリアの強調 */
-.judgefield {
+#judgefield {
+    height: 90px;           /* 枠の高さをときの高さに合わせて固定 */
+    margin: 50px 0;          /* 上下の指画像との間に強制的に20pxの隙間を空ける */
+    display: flex;           /* 枠内の中央揃えが効くようにする 中身が1つだけでも「上下左右のど真ん中に置く」ために使える*/
+    flex-direction: column;  /* 複数行を縦に並べる */
+    justify-content: center; /* 上下を中央揃え */
+    align-items: center;     /* 左右を中央揃え */
     background-color: #3C342D;
     color: white;
     border:  3px solid #facc15;   ;
@@ -102,13 +115,13 @@ header h1 {
     letter-spacing: 5px;
 }
 
-/* リセットボタン */
+/* はじめるボタン */
 #reset {
     background-color: #ef4444;
     color: white;
     border: none;
     padding: 12px 24px;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     font-weight: bold;
     border-radius: 8px;
     cursor: pointer;
@@ -129,16 +142,12 @@ header h1 {
 }
 
 #kakegoe{
-    font-size: 50px;
+    font-size: 40px;
     font-weight: bold;
     text-align: center;
     white-space: nowrap;
-    
 }
 
-img{
-    width: 300px;
-}
 
 #kakegoeran{
     height: 40px;
@@ -156,8 +165,26 @@ input[type="text"] {
 }
 
 .hand_box{ /* 親要素を基準の位置にする */
-    position: relative; /* これが基準になります */
-    display: inline-block; /* 必要に応じてサイズを合わせる */
+    position: relative;
+    width: 200px;
+    height: 220px;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 指の画像は、親のdivクラスのhand_box（150x150）の枠内に比率を保って収める */
+.hand_box img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+}
+
+/* 待機中の手形画像をグレーアウトするクラス */
+.wait_gray {
+    filter: grayscale(100%) opacity(0.5); /* 完全な白黒にして、少し薄くする */
 }
 
 .hand_box > span {
@@ -169,45 +196,45 @@ input[type="text"] {
     clip-path: inset(0 50% 0 0); /* 上 右 下 左 の時計回り順（右から50%カット） */
 }
 
-.hand_box img.half_hand_fade{
-    animation: fadeOut 3s;
-    animation-fill-mode: both; /*フェードアウトした状態を維持*/
-
-}
-
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
 /* 手の画像とWIN画像：親要素の左上に重ねる */
 #pc_hand_img, #my_hand_img,
 #pc_win_img, #my_win_img {
     display: block;
 }
 
-/* WIN画像だけを手の上にピッタリ重ねる設定 */
-#pc_win_img, #my_win_img {
-    position: absolute; /* 親要素（.hand_box）を基準に浮かす */
-    top: 0;
-    left: 0;
-    height: 300px;      /* 手の画像と同じ高さにする */
-    object-fit: contain; /* 画像の比率を崩さずに収める */
-    z-index: 10;       /* 手の画像より手前に表示する */
-
-    animation: fadeIn 3s;
-    animation-fill-mode: both; /*フェードアウトした状態を維持*/
+main {
+    position: relative;
 }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+/* 2. ルールボタンの箱 */
+#rule_box { 
+    margin: 15px auto;
+    text-align: center;
+}
+
+/* ボタン部分のデザイン */
+#rule_box summary {
+    width: 90px;
+    margin: 0 auto;
+    background-color: #f59e0b;
+    color: white;
+    padding: 8px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* 3. ルール画像：下の指画像の上に浮かせて重ねる＆pxでサイズ固定 */
+#rule_box img {
+    position: absolute;         /* ★下の要素を押し下げず、上に浮かせて重ねる */
+    left: 50%;                  /* ★画面の横の真ん中を基準にする */
+    transform: translateX(-50%);/* ★自分の幅の半分だけ左に戻してど真ん中に揃える */
+    width: 400px;               /* ★絶対値（px）でサイズを指定（お好みで調整OK） */
+    max-width: 90vw;            /* （スマホなど狭い画面ではみ出さないための保険） */
+    height: auto;
+    margin-top: 10px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); /* 浮いている感が出る影 */
+    z-index: 50;                /* ★指の画像やWIN画像より手前に表示する */
 }
